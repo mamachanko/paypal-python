@@ -412,7 +412,7 @@ class PayPalInterface(object):
         """
         return self._call('DoExpressCheckoutPayment', **kwargs)
 
-    def generate_express_checkout_redirect_url(self, token):
+    def generate_express_checkout_redirect_url(self, token, commit=False):
         """Returns the URL to redirect the user to for the Express checkout.
 
         Express Checkouts must be verified by the customer by redirecting them
@@ -421,11 +421,15 @@ class PayPalInterface(object):
         to redirect the user to.
 
         :param str token: The unique token identifying this transaction.
+        :param bool commit: Set button text to Pay Now on PayPal review page.
         :rtype: str
         :returns: The URL to redirect the user to for approval.
         """
         url_vars = (self.config.PAYPAL_URL_BASE, token)
-        return "%s?cmd=_express-checkout&token=%s" % url_vars
+        url = "%s?cmd=_express-checkout&token=%s" % url_vars
+        if commit:
+            url += '&useraction=commit'
+        return url
 
     def generate_cart_upload_redirect_url(self, **kwargs):
         """https://www.sandbox.paypal.com/webscr
