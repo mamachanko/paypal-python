@@ -510,3 +510,11 @@ class PayPalInterface(object):
         """
         kwargs.update(self._sanitize_locals(locals()))
         return self._call('BMCreateButton', **kwargs)
+
+    def create_billing_agreement(self, **kwargs):
+        kwargs.update(self._sanitize_locals(locals()))
+        return self._call('CreateBillingAgreement', **kwargs)
+
+    def update_billing_agreement(self, **kwargs):
+        kwargs.update(self._sanitize_locals(locals()))
+        return self._call('BAUpdate', **kwargs)
